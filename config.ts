@@ -1,8 +1,8 @@
 export const config = {
 	env: process.env.NODE_ENV || 'local',
 	ocpp: {
-		defaultVersion: 'v1.6',
-		supportedVersions: ['v1.6'],
+		defaultVersion: '1.6',
+		supportedVersions: ['1.6'],
 	},
 	messaging: {
 		websocket: {
