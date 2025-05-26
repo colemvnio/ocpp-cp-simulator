@@ -61,6 +61,13 @@ class WebSocketClient {
 		}
 	}
 
+	close(): void {
+		if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+			this.ws.close();
+			console.log(`[${this.id}] (out) Closed connection`);
+		}
+	}
+
 	ping(): void {
 		if (this.ws && this.ws.readyState === WebSocket.OPEN) {
 			this.ws.ping();

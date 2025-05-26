@@ -1,13 +1,27 @@
 import WebSocketClient from './infrastructure/messaging/webSocketClient';
+import { ChargePoint } from './domain/entities/chargepoint.entity';
+import { MessageFactory } from './domain/ocpp/message.factory';
+import { config } from '../config';
 
-const client = new WebSocketClient('test-client', 'ws://localhost:8080', 'ocpp1.6');
+const chargePoint = new ChargePoint('Simulator Inc.', 'Sim-X1');
+const ocppMessageFactory = MessageFactory.create(chargePoint.version);
 
-client.connect()
-	.then(() => {
-		console.log('Connected!');
-		client.send(JSON.stringify({ message: 'Hello OCPP server!' }));
-		client.ping();
-	})
-	.catch((err) => {
-		console.error('Connection failed:', err);
-	});
+const webSocketClient = new WebSocketClient(chargePoint.id, config.messaging.websocket.url, `ocpp${chargePoint.version}`);
+
+async function startSimulation() {
+	try {
+		await webSocketClient.connect();
+		chargePoint.sendHeartbeat(webSocketClient, ocppMessageFactory, ocppMessageFactory.createMessageId());
+
+		await webSocketClient.close();
+	} catch (error) {
+		console.error(`[${chargePoint.name}] Failed to connect or run simulation:`, error);
+	}
+}
+
+startSimulation();
+
+process.on('SIGINT', () => {
+	console.log(`[${chargePoint.name}] Shutting down...`);
+	process.exit(0);
+});
