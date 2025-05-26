@@ -19,11 +19,10 @@ export class ChargePoint {
 	sendHeartbeat(
 		client: WebSocketClient,
 		messageFactory: Ocpp16MessageFactory,
-		messageId: string
 	) {
 		const payload: HeartbeatRequest = {};
 
-		const msg = messageFactory.createHeartbeatMessage(messageId, payload);
+		const msg = messageFactory.createHeartbeatMessage(payload);
 		client.send(JSON.stringify(msg));
 	}
 }

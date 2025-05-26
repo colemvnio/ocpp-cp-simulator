@@ -11,7 +11,7 @@ const webSocketClient = new WebSocketClient(chargePoint.id, config.messaging.web
 async function startSimulation() {
 	try {
 		await webSocketClient.connect();
-		chargePoint.sendHeartbeat(webSocketClient, ocppMessageFactory, ocppMessageFactory.createMessageId());
+		chargePoint.sendHeartbeat(webSocketClient, ocppMessageFactory);
 
 		await webSocketClient.close();
 	} catch (error) {
