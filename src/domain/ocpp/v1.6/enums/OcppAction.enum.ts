@@ -1,3 +1,4 @@
 export enum OcppAction {
-    Heartbeat = 'Heartbeat'
+    Heartbeat = 'Heartbeat',
+    StatusNotification = 'StatusNotification',
 }

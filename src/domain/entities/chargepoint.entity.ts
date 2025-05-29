@@ -1,6 +1,7 @@
 import WebSocketClient from '../../infrastructure/messaging/webSocketClient';
 import { Ocpp16MessageFactory } from '../ocpp/v1.6/message.factory';
 import { HeartbeatRequest } from '../ocpp/v1.6/types/Heartbeat.d';
+import { StatusNotificationRequest } from '../ocpp/v1.6/types/StatusNotification.d';
 import { SupportedVersions } from '../ocpp/supported-versions.enum';
 
 export class ChargePoint {
@@ -23,6 +24,15 @@ export class ChargePoint {
 		const payload: HeartbeatRequest = {};
 
 		const msg = messageFactory.createHeartbeatMessage(payload);
+		client.send(JSON.stringify(msg));
+	}
+
+	sendStatusNotification(
+		client: WebSocketClient,
+		messageFactory: Ocpp16MessageFactory,
+		payload: StatusNotificationRequest
+	) {
+		const msg = messageFactory.createStatusNotificationMessage(payload);
 		client.send(JSON.stringify(msg));
 	}
 }

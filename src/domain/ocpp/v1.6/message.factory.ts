@@ -1,5 +1,6 @@
 import { OcppAction } from './enums/OcppAction.enum';
 import { HeartbeatRequest } from './types/Heartbeat.d';
+import { StatusNotificationRequest } from './types/StatusNotification.d';
 
 type OcppRequestMessage<T> = [2, string, OcppAction, T];
 
@@ -10,6 +11,10 @@ export class Ocpp16MessageFactory {
 
 	createHeartbeatMessage(payload: HeartbeatRequest): OcppRequestMessage<HeartbeatRequest> {
 		return [2, this.createMessageId(), OcppAction.Heartbeat, payload];
+	}
+
+	createStatusNotificationMessage(payload: StatusNotificationRequest): OcppRequestMessage<StatusNotificationRequest> {
+		return [2, this.createMessageId(), OcppAction.StatusNotification, payload];
 	}
 }
 
