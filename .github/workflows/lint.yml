@@ -5,6 +5,10 @@ on:
     branches:
       - develop
       - main
+  push:
+    branches:
+      - develop
+      - main
 
 env:
   NODE_VERSION: 22.16.0
